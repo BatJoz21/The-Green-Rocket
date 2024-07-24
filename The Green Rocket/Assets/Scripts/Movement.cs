@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float thrustPower;
     [SerializeField] private float rotateSpeed;
+    [SerializeField] private AudioSource thrustAudio;
 
     void Awake()
     {
@@ -37,6 +38,14 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
         {
             rb.AddRelativeForce(Vector3.up * thrustPower * Time.deltaTime);
+            if (!thrustAudio.isPlaying)
+            {
+                thrustAudio.Play();
+            }
+        }
+        else
+        {
+            thrustAudio.Stop();
         }
     }
 
