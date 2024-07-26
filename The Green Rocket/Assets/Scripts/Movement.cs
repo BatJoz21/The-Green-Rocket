@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rb;
+    [Header("Parameters")]
     [SerializeField] private float thrustPower;
     [SerializeField] private float rotateSpeed;
-    [SerializeField] private AudioSource thrustAudio;
+    [SerializeField] private Rigidbody rb;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip mainEngine;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -27,9 +32,10 @@ public class Movement : MonoBehaviour
 
     private void CheckingInstance()
     {
-        if (rb == null)
+        if (rb == null || audioSource == null)
         {
             rb = GetComponent<Rigidbody>();
+            audioSource = GetComponent<AudioSource>();
         }
     }
 
@@ -38,14 +44,14 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
         {
             rb.AddRelativeForce(Vector3.up * thrustPower * Time.deltaTime);
-            if (!thrustAudio.isPlaying)
+            if (!audioSource.isPlaying)
             {
-                thrustAudio.Play();
+                audioSource.PlayOneShot(mainEngine);
             }
         }
         else
         {
-            thrustAudio.Stop();
+            audioSource.Stop();
         }
     }
 
