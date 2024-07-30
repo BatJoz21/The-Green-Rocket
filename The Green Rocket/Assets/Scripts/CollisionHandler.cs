@@ -14,10 +14,13 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private AudioClip finishSound;
 
     private bool isTransitioning = false;
+    private bool isCantColliding = false;
+    private CapsuleCollider capCol;
 
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        capCol = GetComponent<CapsuleCollider>();
     }
 
     void Start()
@@ -25,17 +28,23 @@ public class CollisionHandler : MonoBehaviour
         CheckingInstance();
     }
 
+    void Update()
+    {
+        Cheats();
+    }
+
     private void CheckingInstance()
     {
-        if (audioSource == null)
+        if (audioSource == null || capCol == null)
         {
             audioSource = GetComponent<AudioSource>();
+            capCol = GetComponent<CapsuleCollider>();
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isTransitioning) { return; }
+        if (isTransitioning || isCantColliding) { return; }
 
         switch (collision.gameObject.tag)
         {
@@ -93,6 +102,20 @@ public class CollisionHandler : MonoBehaviour
         else
         {
             SceneManager.LoadScene(nextSceneIndex);
+        }
+    }
+
+    private void Cheats()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            NextLevel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("Collider Cheats active!");
+            isCantColliding = !isCantColliding;
         }
     }
 }

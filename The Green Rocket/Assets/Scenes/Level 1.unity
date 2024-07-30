@@ -626,6 +626,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocket
       objectReference: {fileID: 0}
+    - target: {fileID: 884565531105002360, guid: 0cb105c18affcc44297aeaaa29440ccb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7866449120374903638, guid: 0cb105c18affcc44297aeaaa29440ccb, type: 3}
       propertyPath: m_RootOrder
       value: 5
